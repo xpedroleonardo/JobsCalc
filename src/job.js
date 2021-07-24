@@ -1,6 +1,6 @@
 const url = __dirname + "/views/";
 
-const data = [
+let JobList = [
   {
     id: 1,
     name: "App",
@@ -19,7 +19,7 @@ const data = [
 
 const controllers = {
   index(req, res) {
-    const updateJobs = data.map((job) => {
+    const updateJobs = JobList.map((job) => {
       const remaining = services.remainingDays(job);
       const status = remaining <= 0 ? "done" : "progress";
 
@@ -38,18 +38,53 @@ const controllers = {
   },
   save(req, res) {
     const job = req.body;
-    job.id = (data[data.length - 1]?.id || 0) + 1;
+    job.id = (JobList[JobList.length - 1]?.id || 0) + 1;
     job.created_at = Date.now();
 
-    data.push(job);
+    JobList.push(job);
     return res.redirect("/");
   },
   show(req, res) {
     const jobId = req.params.id;
-    const job = data.find(({ id }) => Number(id) === Number(jobId));
+    const job = JobList.find(({ id }) => Number(id) === Number(jobId));
+
+    if (!job) {
+      return res.send("Job not found...");
+    }
+
     job.budget = services.calculateBudget(job, profile.data.valueHour);
 
     return res.render(url + "job-edit", { job });
+  },
+  update(req, res) {
+    const jobId = req.params.id;
+    const job = JobList.find(({ id }) => Number(id) === Number(jobId));
+
+    if (!job) {
+      return res.send("Job not found...");
+    }
+
+    const updatedJob = {
+      ...job,
+      name: req.body.name,
+      totalHours: req.body.totalHours,
+      dailyHours: req.body.dailyHours,
+    };
+
+    JobList = JobList.map((job) => {
+      if (Number(job.id) === Number(jobId)) {
+        job = updatedJob;
+      }
+      return job;
+    });
+
+    res.redirect("/job/" + jobId);
+  },
+  delete(req, res) {
+    const jobId = req.params.id;
+    JobList = JobList.filter(({ id }) => Number(id) !== Number(jobId));
+
+    return res.redirect("/");
   },
 };
 
@@ -101,4 +136,4 @@ const services = {
   calculateBudget: (job, valueHour) => valueHour * job.totalHours,
 };
 
-module.exports = { url, controllers, data, services, profile };
+module.exports = { url, controllers, services, profile };
