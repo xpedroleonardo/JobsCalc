@@ -14,7 +14,7 @@
                 type="text" 
                 id="name" 
                 name="name"
-                value="Pizzaria Guloso"
+                value="<%= job.name %>"
               />
             </div>
 
@@ -27,7 +27,7 @@
                   step="0.1" 
                   id="dailyHours" 
                   name="dailyHours"
-                  value="2"/>
+                  value="<%= job.dailyHours %>"/>
               </div>
 
               <div class="input-wrapper">
@@ -37,7 +37,7 @@
                   type="number"
                   id="totalHours" 
                   name="totalHours"
-                  value="40" />
+                  value="<%= job.totalHours %>" />
               </div>
             </div>
           </fieldset>
@@ -47,7 +47,7 @@
       <aside class="card">
         <img src="/images/money-color.svg" draggable="false" alt="Imagem de Dinheiro">
         <p>
-          O valor do projeto ficou em <strong>R$ 4576,00</strong>
+          O valor do projeto ficou em <strong>R$ <%= job.budget.toFixed(2).replace(".",",") %></strong>
         </p>
         <div class="button-group">
           <button 
@@ -75,7 +75,7 @@
         <h3>Excluir Job</h3>
         <p>Quer mesmo excluir esse job? <br/>
         Ele será apagado para sempre.  
-        <p>
+        </p>
         <footer>
           <a 
             class="button gray" 
