@@ -1,5 +1,3 @@
-const url = __dirname + "/views/";
-
 let JobList = [
   {
     id: 1,
@@ -31,10 +29,10 @@ const controllers = {
       };
     });
 
-    return res.render(url + "index", { jobs: updateJobs });
+    return res.render("index", { jobs: updateJobs });
   },
   create(req, res) {
-    return res.render(url + "job");
+    return res.render("job");
   },
   save(req, res) {
     const job = req.body;
@@ -54,7 +52,7 @@ const controllers = {
 
     job.budget = services.calculateBudget(job, profile.data.valueHour);
 
-    return res.render(url + "job-edit", { job });
+    return res.render("job-edit", { job });
   },
   update(req, res) {
     const jobId = req.params.id;
@@ -98,25 +96,6 @@ const profile = {
     vacationPerYear: 4,
     valueHour: 50,
   },
-  index(req, res) {
-    return res.render(url + "profile", { profile: profile.data });
-  },
-  update(req, res) {
-    const data = req.body;
-
-    const weeksPerYear = 52;
-    const weeksPerMonth = (weeksPerYear - data.vacationPerYear) / 12;
-    const weekTotalHours = data.hoursPerDay * data.daysPerWeek;
-    const monthlyTotalHours = weekTotalHours * weeksPerMonth;
-    const valueHour = data.monthlyBudget / monthlyTotalHours;
-
-    profile.data = {
-      ...profile.data,
-      ...data,
-      valueHour,
-    };
-    return res.redirect("/profile");
-  },
 };
 
 const services = {
@@ -136,4 +115,4 @@ const services = {
   calculateBudget: (job, valueHour) => valueHour * job.totalHours,
 };
 
-module.exports = { url, controllers, services, profile };
+module.exports = { controllers, services, profile };
