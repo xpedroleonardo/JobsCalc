@@ -1,19 +1,19 @@
 const express = require("express");
 const routes = express.Router();
-const { controllers } = require("./job");
 
-const profileControler = require("./controllers/profileController");
+const JobController = require("./controllers/JobController");
+const ProfileController = require("./controllers/ProfileController");
 
-routes.get("/", controllers.index);
+routes.get("/", JobController.index);
 
-routes.get("/job", controllers.create);
-routes.post("/job", controllers.save);
+routes.get("/job", JobController.create);
+routes.post("/job", JobController.save);
 
-routes.get("/job/:id", controllers.show);
-routes.post("/job/:id", controllers.update);
-routes.post("/job/delete/:id", controllers.delete);
+routes.get("/job/:id", JobController.show);
+routes.post("/job/:id", JobController.update);
+routes.post("/job/delete/:id", JobController.delete);
 
-routes.get("/profile", profileControler.index);
-routes.post("/profile", profileControler.update);
+routes.get("/profile", ProfileController.index);
+routes.post("/profile", ProfileController.update);
 
 module.exports = routes;

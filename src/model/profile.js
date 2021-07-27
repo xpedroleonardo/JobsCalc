@@ -8,12 +8,11 @@ let data = {
   valueHour: 50,
 };
 
-function get() {
-  return data;
-}
-
-function set(newData) {
-  data = newData;
-}
-
-module.exports = { get, set };
+module.exports = {
+  get() {
+    return data;
+  },
+  update(newData) {
+    data = newData;
+  },
+};

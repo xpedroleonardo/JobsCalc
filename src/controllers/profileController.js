@@ -1,25 +1,25 @@
-const profile = require("../model/profile");
+const Profile = require("../model/Profile");
 
-function index(req, res) {
-  return res.render("profile", { profile: profile.get() });
-}
+module.exports = {
+  index(req, res) {
+    return res.render("profile", { profile: Profile.get() });
+  },
 
-function update(req, res) {
-  const data = req.body;
+  update(req, res) {
+    const data = req.body;
 
-  const weeksPerYear = 52;
-  const weeksPerMonth = (weeksPerYear - data.vacationPerYear) / 12;
-  const weekTotalHours = data.hoursPerDay * data.daysPerWeek;
-  const monthlyTotalHours = weekTotalHours * weeksPerMonth;
-  const valueHour = data.monthlyBudget / monthlyTotalHours;
+    const weeksPerYear = 52;
+    const weeksPerMonth = (weeksPerYear - data.vacationPerYear) / 12;
+    const weekTotalHours = data.hoursPerDay * data.daysPerWeek;
+    const monthlyTotalHours = weekTotalHours * weeksPerMonth;
+    const valueHour = data.monthlyBudget / monthlyTotalHours;
 
-  profile.set({
-    ...profile.get(),
-    ...data,
-    valueHour,
-  });
+    Profile.update({
+      ...Profile.get(),
+      ...data,
+      valueHour,
+    });
 
-  return res.redirect("/profile");
-}
-
-module.exports = { index, update };
+    return res.redirect("/profile");
+  },
+};
