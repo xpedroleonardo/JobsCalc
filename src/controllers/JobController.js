@@ -1,26 +1,8 @@
 const Job = require("../model/Job");
 const Profile = require("../model/Profile");
-const { remainingDays, calculateBudget } = require("../utils/JobUtils");
+const { calculateBudget } = require("../utils/JobUtils");
 
 module.exports = {
-  index(req, res) {
-    const jobs = Job.get();
-    const profile = Profile.get();
-
-    const updateJobs = jobs.map((job) => {
-      const remaining = remainingDays(job);
-      const status = remaining <= 0 ? "done" : "progress";
-
-      return {
-        ...job,
-        remaining,
-        status,
-        budget: calculateBudget(job, profile.valueHour),
-      };
-    });
-
-    return res.render("index", { jobs: updateJobs });
-  },
   create(req, res) {
     return res.render("job");
   },
