@@ -31,29 +31,9 @@ module.exports = {
   },
   async update(req, res) {
     const jobId = req.params.id;
-    const jobs = await Job.get();
+    const updatedJob = req.body;
 
-    const job = jobs.find(({ id }) => Number(id) === Number(jobId));
-
-    if (!job) {
-      return res.send("Job not found...");
-    }
-
-    const updatedJob = {
-      // ...job,
-      name: req.body.name,
-      totalHours: req.body.totalHours,
-      dailyHours: req.body.dailyHours,
-    };
-
-    const newJob = jobs.find((job) => {
-      if (Number(job.id) === Number(jobId)) {
-        job = updatedJob;
-        return job;
-      }
-    });
-
-    Job.update(updatedJob);
+    await Job.update(updatedJob, jobId);
 
     res.redirect("/job/" + jobId);
   },

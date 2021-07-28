@@ -30,14 +30,12 @@ module.exports = {
 
     await db.close();
   },
-  async update(Job) {
-    const { id, name, dailyHours, totalHours } = Job;
-
-    console.log(Job);
+  async update(updatedJob, id) {
+    const { name, dailyHours, totalHours } = updatedJob;
 
     const db = await Database();
 
-    await db.get(`
+    await db.run(`
       UPDATE jobs SET
       name = "${name}",
       dailyHours = ${Number(dailyHours)},
@@ -47,10 +45,10 @@ module.exports = {
 
     await db.close();
   },
-  async delete(jobId) {
+  async delete(id) {
     const db = await Database();
 
-    await db.get(`DELETE FROM jobs WHERE id = ${jobId}`);
+    await db.run(`DELETE FROM jobs WHERE id = ${id}`);
 
     await db.close();
   },
