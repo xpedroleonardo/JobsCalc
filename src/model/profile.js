@@ -1,12 +1,10 @@
 const Database = require("../db/config");
 
-let data;
-
 module.exports = {
   async get() {
     const db = await Database();
 
-    data = await db.get(`SELECT * FROM profile`);
+    const data = await db.get(`SELECT * FROM profile`);
 
     await db.close();
     return data;
