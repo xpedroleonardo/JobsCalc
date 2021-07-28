@@ -47,28 +47,6 @@ const initDb = {
         )
     `);
 
-    await db.run(`
-      INSERT INTO jobs (
-        name,
-        dailyHours,
-        totalHours,
-        created_at
-        ) VALUES (
-          "App",5,25,348340231344
-        )
-    `);
-
-    await db.run(`
-      INSERT INTO jobs (
-        name,
-        dailyHours,
-        totalHours,
-        created_at
-        ) VALUES (
-          "WebSite", 2, 10, 348340231344
-        )
-    `);
-
     await db.close();
   },
 };

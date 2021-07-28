@@ -22,8 +22,6 @@ module.exports = {
       valueHour,
     } = newData;
 
-    console.log(newData);
-
     await db.get(`
       UPDATE profile SET
         name = "${name}",
