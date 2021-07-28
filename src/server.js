@@ -9,4 +9,4 @@ app.use(express.urlencoded({ extended: true })); //req.body = true
 app.use(express.static("public"));
 app.use(routes);
 
-app.listen(3000, () => console.log("Server is Running!!"));
+app.listen(3000, () => console.log("Running in: http://localhost:3000/"));

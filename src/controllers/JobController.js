@@ -9,11 +9,11 @@ module.exports = {
   save(req, res) {
     const newJob = req.body;
     const jobs = Job.get();
-
     newJob.id = (jobs[jobs.length - 1]?.id || 0) + 1;
     newJob.created_at = Date.now();
 
-    jobs.push(newJob);
+    Job.create(newJob);
+
     return res.redirect("/");
   },
   show(req, res) {

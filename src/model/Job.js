@@ -19,8 +19,11 @@ module.exports = {
   get() {
     return data;
   },
-  update(newJob) {
-    data = newJob;
+  create(newJob) {
+    data.push(newJob);
+  },
+  update(Job) {
+    data = Job;
   },
   delete(jobId) {
     data = data.filter(({ id }) => Number(id) !== Number(jobId));
